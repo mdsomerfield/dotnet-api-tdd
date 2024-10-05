@@ -1,6 +1,19 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Microsoft.AspNetCore;
 
-app.MapGet("/", () => "Hello World!");
+namespace Mds.TddExample.Api;
+public class Program
+{
+    public static async Task Main(string[] args)
+    {
+        var host = BuildWebHost(args);
 
-app.Run();
+        host.Run();
+    }
+
+    public static IWebHost BuildWebHost(string[] args)
+    {
+        return WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>()
+            .Build();
+    }
+}

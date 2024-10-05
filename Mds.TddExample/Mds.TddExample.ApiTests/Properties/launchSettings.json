@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Mds.TddExample.ApiTests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:54992;http://localhost:54993"
+    }
+  }
+}

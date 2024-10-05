@@ -66,7 +66,10 @@ public class JsonClient
 
         var jsonBody = contentString is TResponse responseString
             ? responseString
-            : JsonSerializer.Deserialize<TResponse>(contentString);
+            : JsonSerializer.Deserialize<TResponse>(contentString, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            });
 
         return new JsonResponse<TResponse>
         {

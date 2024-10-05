@@ -11,6 +11,7 @@ public class ApiTestFixture
 
     public ApiTestFixture()
     {
+        Console.WriteLine("ApiTestFixture constructor");
     }
 
     public JsonClient CreateClient()

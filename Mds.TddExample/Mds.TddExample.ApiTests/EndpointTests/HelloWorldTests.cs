@@ -21,7 +21,7 @@ public class HelloWorldTests
         var client = _fixture.CreateClient();
 
         // Act
-        var response = await client.GetAsync<HelloWorldResponse>("/hello-world");
+        var response = await client.GetAsync<HelloWorldResponse>("hello-world");
 
         // Assert
         Assert.NotNull(response.Body);
