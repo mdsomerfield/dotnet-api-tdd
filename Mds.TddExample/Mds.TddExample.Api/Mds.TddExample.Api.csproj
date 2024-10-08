@@ -10,4 +10,8 @@
     <PackageReference Include="FluentAssertions" Version="6.12.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mds.TddExample.Domain\Mds.TddExample.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

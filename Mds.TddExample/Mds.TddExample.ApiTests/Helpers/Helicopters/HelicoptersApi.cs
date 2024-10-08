@@ -20,9 +20,9 @@ namespace Mds.TddExample.ApiTests.Helpers.Helicopters
             return response.Body;
         }
 
-        public async Task<HelicopterDto> CreateHelicopter(CreateHelicopterDto createModel)
+        public async Task<HelicopterDto> CreateHelicopter(HelicopterDto createModel)
         {
-            var response = await _jsonClient.PostAsync<CreateHelicopterDto, HelicopterDto>("helicopters", createModel);
+            var response = await _jsonClient.PostAsync<HelicopterDto, HelicopterDto>("helicopters", createModel);
             return response.Body;
         }
 

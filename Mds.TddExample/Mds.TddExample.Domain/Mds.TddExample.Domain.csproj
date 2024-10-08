@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mds.TddExample.Db\Mds.TddExample.Db.csproj" />
+  </ItemGroup>
+
 </Project>
