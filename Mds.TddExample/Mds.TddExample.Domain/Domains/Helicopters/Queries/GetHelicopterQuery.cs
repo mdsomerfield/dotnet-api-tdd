@@ -1,6 +1,4 @@
 ﻿using Mds.TddExample.Db;
-using Mds.TddExample.Db.Entities;
-using Mds.TddExample.Domain.Common;
 using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Mds.TddExample.Domain.Exceptions;
 
@@ -13,9 +11,9 @@ public interface IGetHelicopterQuery
 public class GetHelicopterQuery : IGetHelicopterQuery
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly IModelMapper<Helicopter, HelicopterModel> _mapper;
+    private readonly IHelicopterModelMapper _mapper;
 
-    public GetHelicopterQuery(ApplicationDbContext dbContext, IModelMapper<Helicopter, HelicopterModel> mapper)
+    public GetHelicopterQuery(ApplicationDbContext dbContext, IHelicopterModelMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;

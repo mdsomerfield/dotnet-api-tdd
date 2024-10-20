@@ -1,5 +1,4 @@
-﻿using Mds.TddExample.Api.Common;
-using Mds.TddExample.Domain.Domains.Helicopters.Commands;
+﻿using Mds.TddExample.Domain.Domains.Helicopters.Commands;
 using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Mds.TddExample.Domain.Domains.Helicopters.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +13,15 @@ namespace Mds.TddExample.Api.Helicopters
         private readonly IUpdateHelicopterCommand _updateHelicopterCommand;
         private readonly ICreateHelicopterCommand _createHelicopterCommand;
         private readonly IDeleteHelicopterCommand _deleteHelicopterCommand;
-        private readonly IDtoMapper<HelicopterModel, HelicopterDto> _helicopterDtoMapper;
+        private readonly IHelicopterDtoMapper _helicopterDtoMapper;
 
         public HelicoptersController(
             ISearchHelicoptersQuery searchHelicoptersQuery,
             IGetHelicopterQuery getHelicopterQuery,
             IUpdateHelicopterCommand updateHelicopterCommand,
             ICreateHelicopterCommand createHelicopterCommand,
-            IDeleteHelicopterCommand deleteHelicopterCommand, IDtoMapper<HelicopterModel, HelicopterDto> helicopterDtoMapper)
+            IDeleteHelicopterCommand deleteHelicopterCommand,
+            IHelicopterDtoMapper helicopterDtoMapper)
         {
             _searchHelicoptersQuery = searchHelicoptersQuery;
             _getHelicopterQuery = getHelicopterQuery;
@@ -39,7 +39,7 @@ namespace Mds.TddExample.Api.Helicopters
         }
 
         [HttpPost]
-        public async Task<HelicopterDto> Create(HelicopterDto dto)
+        public async Task<HelicopterDto> Create([FromBody]HelicopterDto dto)
         {
             var helicopter = _helicopterDtoMapper.MapTo(dto);
             var createdModel = await _createHelicopterCommand.Execute(helicopter);
@@ -56,7 +56,7 @@ namespace Mds.TddExample.Api.Helicopters
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<HelicopterDto> Update(int id, HelicopterDto dto)
+        public async Task<HelicopterDto> Update(int id, [FromBody]HelicopterDto dto)
         {
             var helicopter = _helicopterDtoMapper.MapTo(dto);
             var updatedModel = await _updateHelicopterCommand.Execute(id, helicopter);

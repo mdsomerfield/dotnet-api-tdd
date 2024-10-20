@@ -1,6 +1,4 @@
 ﻿using Mds.TddExample.Db;
-using Mds.TddExample.Db.Entities;
-using Mds.TddExample.Domain.Common;
 using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +12,9 @@ namespace Mds.TddExample.Domain.Domains.Helicopters.Queries
     public class SearchHelicoptersQuery : ISearchHelicoptersQuery
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly IModelMapper<Helicopter, HelicopterModel> _mapper;
+        private readonly IHelicopterModelMapper _mapper;
 
-        public SearchHelicoptersQuery(ApplicationDbContext dbContext, IModelMapper<Helicopter, HelicopterModel> mapper)
+        public SearchHelicoptersQuery(ApplicationDbContext dbContext, IHelicopterModelMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;

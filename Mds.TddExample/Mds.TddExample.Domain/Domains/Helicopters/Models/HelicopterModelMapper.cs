@@ -1,9 +1,15 @@
 ﻿using Mds.TddExample.Db.Entities;
-using Mds.TddExample.Domain.Common;
 
 namespace Mds.TddExample.Domain.Domains.Helicopters.Models
 {
-    internal class HelicopterModelMapper : IModelMapper<Helicopter, HelicopterModel>
+    public interface IHelicopterModelMapper
+    {
+        HelicopterModel MapFrom(Helicopter entity);
+
+        Helicopter MapTo(HelicopterModel model);
+    }
+
+    internal class HelicopterModelMapper : IHelicopterModelMapper
     {
         public HelicopterModel MapFrom(Helicopter entity)
         {
@@ -14,7 +20,7 @@ namespace Mds.TddExample.Domain.Domains.Helicopters.Models
         {
             return new Helicopter
             {
-                Id = model.Id,
+                Id = (int)model.Id,
                 Name = model.Name
             };
         }

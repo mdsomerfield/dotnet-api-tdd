@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Mds.TddExample.Db\Mds.TddExample.Db.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
+
 </Project>

@@ -2,9 +2,13 @@
 
 namespace Mds.TddExample.Api.Helicopters
 {
-    public class HelicopterDto
+    public class CreateHelicopterDto
+    {
+        public string Name { get; set; }
+    }
+
+    public class HelicopterDto : CreateHelicopterDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
     }
 }

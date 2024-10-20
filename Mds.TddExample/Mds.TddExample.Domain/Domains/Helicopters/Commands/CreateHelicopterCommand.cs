@@ -1,6 +1,4 @@
 ﻿using Mds.TddExample.Db;
-using Mds.TddExample.Db.Entities;
-using Mds.TddExample.Domain.Common;
 using Mds.TddExample.Domain.Domains.Helicopters.Models;
 
 namespace Mds.TddExample.Domain.Domains.Helicopters.Commands;
@@ -13,9 +11,9 @@ public interface ICreateHelicopterCommand
 public class CreateHelicopterCommand : ICreateHelicopterCommand
 {
     private readonly ApplicationDbContext _dbContext;
-    private readonly IModelMapper<Helicopter, HelicopterModel> _mapper;
+    private readonly IHelicopterModelMapper _mapper;
 
-    public CreateHelicopterCommand(ApplicationDbContext dbContext, IModelMapper<Helicopter, HelicopterModel> mapper)
+    public CreateHelicopterCommand(ApplicationDbContext dbContext, IHelicopterModelMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;
