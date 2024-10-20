@@ -1,9 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+
 using Mds.TddExample.Db;
 using Mds.TddExample.Db.Entities;
 using Mds.TddExample.Domain.Domains.Helicopters.Commands;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mds.TddExample.Api;
 
@@ -27,7 +29,7 @@ public class Startup
 
     public IServiceProvider ConfigureServices(IServiceCollection services)
     {
-        var builder = BuildContainer(services);
+        var builder = BuildContainer(services, Configuration);
 
         ApplicationContainer = builder.Build();
 
@@ -42,13 +44,20 @@ public class Startup
     // Setup factored into static methods so that it can be shared easily with the TestStartup class.
     #region static setup
 
-    public static ContainerBuilder BuildContainer(IServiceCollection services)
+    public static ContainerBuilder BuildContainer(IServiceCollection services, IConfiguration configuration)
     {
         services.AddMvc().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         services.AddAntiforgery();
 
         services.AddAuthorization(options => { });
+
+        var connStr = configuration.GetConnectionString("ApplicationConnectionString");
+        services.AddDbContext<ApplicationDbContext>(
+            optionsAction: options =>
+                options
+                    .UseNpgsql(connStr, x => x.MigrationsHistoryTable("__EFMigrationsHistory", "dbo"))
+        );
 
         var builder = new ContainerBuilder();
 

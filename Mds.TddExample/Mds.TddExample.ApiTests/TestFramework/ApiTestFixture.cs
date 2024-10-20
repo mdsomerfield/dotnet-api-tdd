@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Mds.TddExample.Db;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Mds.TddExample.ApiTests.TestFramework;
@@ -11,7 +13,11 @@ public class ApiTestFixture
 
     public ApiTestFixture()
     {
-        Console.WriteLine("ApiTestFixture constructor");
+        using var scope = Factory.Services.CreateScope();
+
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.EnsureDeleted();
+        dbContext.Database.Migrate();
     }
 
     public JsonClient CreateClient()

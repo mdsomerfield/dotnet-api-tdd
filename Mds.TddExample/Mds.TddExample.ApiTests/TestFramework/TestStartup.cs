@@ -14,8 +14,8 @@ public class TestStartup
     {
         Configuration = new ConfigurationBuilder()
            .SetBasePath(env.ContentRootPath)
-                    .AddJsonFile("appsettings.json", true, true)
-                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+                    //.AddJsonFile("appsettings.json", true, true)
+                    .AddJsonFile($"appsettings.Test.json", true)
                     .AddEnvironmentVariables()
            .Build();
 
@@ -24,7 +24,7 @@ public class TestStartup
 
     public IServiceProvider ConfigureServices(IServiceCollection services)
     {
-        var builder = Startup.BuildContainer(services);
+        var builder = Startup.BuildContainer(services, Configuration);
 
         ApplicationContainer = builder.Build();
 
