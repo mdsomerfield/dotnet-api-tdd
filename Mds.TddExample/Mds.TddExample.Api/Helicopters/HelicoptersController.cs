@@ -1,4 +1,6 @@
-﻿using Mds.TddExample.Domain.Domains.Helicopters.Commands;
+﻿using Mds.TddExample.Api.Common;
+using Mds.TddExample.Domain.Domains.Helicopters.Commands;
+using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Mds.TddExample.Domain.Domains.Helicopters.Queries;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,34 +14,36 @@ namespace Mds.TddExample.Api.Helicopters
         private readonly IUpdateHelicopterCommand _updateHelicopterCommand;
         private readonly ICreateHelicopterCommand _createHelicopterCommand;
         private readonly IDeleteHelicopterCommand _deleteHelicopterCommand;
+        private readonly IDtoMapper<HelicopterModel, HelicopterDto> _helicopterDtoMapper;
 
         public HelicoptersController(
             ISearchHelicoptersQuery searchHelicoptersQuery,
             IGetHelicopterQuery getHelicopterQuery,
             IUpdateHelicopterCommand updateHelicopterCommand,
             ICreateHelicopterCommand createHelicopterCommand,
-            IDeleteHelicopterCommand deleteHelicopterCommand)
+            IDeleteHelicopterCommand deleteHelicopterCommand, IDtoMapper<HelicopterModel, HelicopterDto> helicopterDtoMapper)
         {
             _searchHelicoptersQuery = searchHelicoptersQuery;
             _getHelicopterQuery = getHelicopterQuery;
             _updateHelicopterCommand = updateHelicopterCommand;
             _createHelicopterCommand = createHelicopterCommand;
             _deleteHelicopterCommand = deleteHelicopterCommand;
+            _helicopterDtoMapper = helicopterDtoMapper;
         }
 
         [HttpGet]
         public async Task<IList<HelicopterDto>> Query()
         {
             var helicopters = await _searchHelicoptersQuery.Execute();
-            return helicopters.Select(HelicopterDto.MapFrom).ToList();
+            return helicopters.Select(_helicopterDtoMapper.MapFrom).ToList();
         }
 
         [HttpPost]
         public async Task<HelicopterDto> Create(HelicopterDto dto)
         {
-            var helicopter = HelicopterDto.MapToHelicopterModel();
+            var helicopter = _helicopterDtoMapper.MapTo(dto);
             var createdModel = await _createHelicopterCommand.Execute(helicopter);
-            return HelicopterDto.MapFrom(createdModel);
+            return _helicopterDtoMapper.MapFrom(createdModel);
         }
 
         [HttpGet]
@@ -47,16 +51,16 @@ namespace Mds.TddExample.Api.Helicopters
         public async Task<HelicopterDto> Get(int id)
         {
             var helicopter = await _getHelicopterQuery.Execute(id);
-            return HelicopterDto.MapFrom(helicopter);
+            return _helicopterDtoMapper.MapFrom(helicopter);
         }
 
         [HttpPut]
         [Route("{id}")]
         public async Task<HelicopterDto> Update(int id, HelicopterDto dto)
         {
-            var helicopter = HelicopterDto.MapToHelicopterModel();
+            var helicopter = _helicopterDtoMapper.MapTo(dto);
             var updatedModel = await _updateHelicopterCommand.Execute(id, helicopter);
-            return HelicopterDto.MapFrom(updatedModel);
+            return _helicopterDtoMapper.MapFrom(updatedModel);
         }
 
         [HttpDelete]

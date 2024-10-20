@@ -1,6 +1,5 @@
 ﻿using Mds.TddExample.Db;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Mds.TddExample.ApiTests.TestFramework;

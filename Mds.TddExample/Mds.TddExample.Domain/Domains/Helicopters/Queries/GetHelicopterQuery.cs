@@ -1,4 +1,6 @@
 ﻿using Mds.TddExample.Db;
+using Mds.TddExample.Db.Entities;
+using Mds.TddExample.Domain.Common;
 using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Mds.TddExample.Domain.Exceptions;
 
@@ -11,10 +13,12 @@ public interface IGetHelicopterQuery
 public class GetHelicopterQuery : IGetHelicopterQuery
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly IModelMapper<Helicopter, HelicopterModel> _mapper;
 
-    public GetHelicopterQuery(ApplicationDbContext dbContext)
+    public GetHelicopterQuery(ApplicationDbContext dbContext, IModelMapper<Helicopter, HelicopterModel> mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
 
     public async Task<HelicopterModel> Execute(int id)
@@ -26,6 +30,6 @@ public class GetHelicopterQuery : IGetHelicopterQuery
             throw new NotFoundException("Helicopter not found");
         }
 
-        return new HelicopterModel(entity);
+        return _mapper.MapFrom(entity);
     }
 }

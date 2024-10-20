@@ -6,19 +6,5 @@ namespace Mds.TddExample.Api.Helicopters
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public static HelicopterDto MapFrom(HelicopterModel entity)
-        {
-            return new HelicopterDto
-            {
-                Id = entity.Id,
-                Name = entity.Name
-            };
-        }
-
-        public static HelicopterModel MapToHelicopterModel()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

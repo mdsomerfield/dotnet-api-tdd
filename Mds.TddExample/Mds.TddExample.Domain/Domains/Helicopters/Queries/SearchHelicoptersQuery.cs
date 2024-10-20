@@ -1,4 +1,6 @@
 ﻿using Mds.TddExample.Db;
+using Mds.TddExample.Db.Entities;
+using Mds.TddExample.Domain.Common;
 using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,16 +14,18 @@ namespace Mds.TddExample.Domain.Domains.Helicopters.Queries
     public class SearchHelicoptersQuery : ISearchHelicoptersQuery
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IModelMapper<Helicopter, HelicopterModel> _mapper;
 
-        public SearchHelicoptersQuery(ApplicationDbContext dbContext)
+        public SearchHelicoptersQuery(ApplicationDbContext dbContext, IModelMapper<Helicopter, HelicopterModel> mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<IList<HelicopterModel>> Execute()
         {
             var helicopters = await _dbContext.Helicopters.ToListAsync();
-            return helicopters.Select(h => new HelicopterModel(h)).ToList();
+            return helicopters.Select(_mapper.MapFrom).ToList();
         }
     }
 }

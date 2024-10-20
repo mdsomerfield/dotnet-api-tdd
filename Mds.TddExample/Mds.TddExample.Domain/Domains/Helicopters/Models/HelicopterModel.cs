@@ -7,15 +7,10 @@ namespace Mds.TddExample.Domain.Domains.Helicopters.Models
         public int Id { get; private set; }
         public string Name { get; private set; }
 
-        public HelicopterModel(Helicopter entry)
+        public HelicopterModel(int id, string name)
         {
-            Id = entry.Id;
-            Name = entry.Name;
-        }
-
-        public Helicopter ToEntity()
-        {
-            throw new NotImplementedException();
+            Id = id;
+            Name = name;
         }
     }
 }
