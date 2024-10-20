@@ -11,20 +11,21 @@ namespace Mds.TddExample.ApiTests.Helpers.Helicopters
             Instance = new HelicopterDto();
         }
 
-        public HelicopterBuilder WithName()
+        public HelicopterBuilder WithName(string name)
         {
-            Instance.Name = "Name";
+            Instance.Name = name;
             return this;
         }
 
         public HelicopterDto Build()
         {
-            throw new NotImplementedException();
+            return Instance;
         }
 
         public HelicopterBuilder Clone()
         {
-            throw new NotImplementedException();
+            return new HelicopterBuilder()
+                .WithName(Instance.Name);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Mds.TddExample.ApiTests.WorkflowTests
             createdHelicopter.Name.Should().Be(newHelicopter.Name);
 
             // 5. Update the new helicopter
-            var updatedHelicopterDto = helicopterBuilder.Clone().WithName().Build();
+            var updatedHelicopterDto = helicopterBuilder.Clone().WithName("Name").Build();
             var updatedHelicopter1 = await helicoptersApi.UpdateHelicopter(newHelicopter.Id, updatedHelicopterDto);
             updatedHelicopter1.Name.Should().Be(updatedHelicopterDto.Name);
 
