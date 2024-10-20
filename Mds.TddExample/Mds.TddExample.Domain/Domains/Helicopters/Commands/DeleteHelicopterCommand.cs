@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mds.TddExample.Domain.Domains.Helicopters.Commands;
 
-public class DeleteHelicopterCommand
+public interface IDeleteHelicopterCommand
+{
+    Task Execute(int id);
+}
+public class DeleteHelicopterCommand : IDeleteHelicopterCommand
 {
     private readonly ApplicationDbContext _dbContext;
 

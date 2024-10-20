@@ -1,14 +1,14 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Mds.TddExample.Api;
 
 namespace Mds.TddExample.ApiTests.TestFramework;
 
 public class TestStartup
 {
     public IConfiguration Configuration { get; }
+
+    public IContainer ApplicationContainer { get; private set; }
 
     public TestStartup(IConfiguration configuration, IWebHostEnvironment env)
     {
@@ -22,25 +22,18 @@ public class TestStartup
         Configuration = configuration;
     }
 
-    public void ConfigureServices(IServiceCollection services)
+    public IServiceProvider ConfigureServices(IServiceCollection services)
     {
-        services.AddMvc().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+        var builder = Startup.BuildContainer(services);
 
-        services.AddAntiforgery();
+        ApplicationContainer = builder.Build();
 
-        services.AddAuthorization(options => { });
+        return new AutofacServiceProvider(ApplicationContainer);
     }
 
     public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.UseRouting();
-
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        Startup.ConfigureApp(app, env);
     }
+
 }

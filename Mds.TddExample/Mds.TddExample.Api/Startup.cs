@@ -1,10 +1,17 @@
 ﻿using System.Text.Json.Serialization;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Mds.TddExample.Db;
+using Mds.TddExample.Db.Entities;
+using Mds.TddExample.Domain.Domains.Helicopters.Commands;
 
 namespace Mds.TddExample.Api;
 
 public class Startup
 {
     public IConfiguration Configuration { get; }
+
+    public IContainer ApplicationContainer { get; private set; }
 
     public Startup(IConfiguration configuration, IWebHostEnvironment env)
     {
@@ -18,16 +25,44 @@ public class Startup
         Configuration = configuration;
     }
 
-    public void ConfigureServices(IServiceCollection services)
+    public IServiceProvider ConfigureServices(IServiceCollection services)
+    {
+        var builder = BuildContainer(services);
+
+        ApplicationContainer = builder.Build();
+
+        return new AutofacServiceProvider(ApplicationContainer);
+    }
+
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        ConfigureApp(app, env);
+    }
+
+    // Setup factored into static methods so that it can be shared easily with the TestStartup class.
+    #region static setup
+
+    public static ContainerBuilder BuildContainer(IServiceCollection services)
     {
         services.AddMvc().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         services.AddAntiforgery();
 
         services.AddAuthorization(options => { });
+
+        var builder = new ContainerBuilder();
+
+        builder.Populate(services);
+
+        builder.RegisterAssemblyTypes(typeof(Startup).Assembly).AsImplementedInterfaces();
+        builder.RegisterAssemblyTypes(typeof(CreateHelicopterCommand).Assembly).AsImplementedInterfaces();
+        builder.RegisterAssemblyTypes(typeof(Helicopter).Assembly).AsImplementedInterfaces();
+        builder.RegisterType<ApplicationDbContext>();
+
+        return builder;
     }
 
-    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public static void ConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.UseRouting();
 
@@ -39,4 +74,7 @@ public class Startup
             endpoints.MapControllers();
         });
     }
+
+    #endregion
+
 }

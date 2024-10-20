@@ -2,23 +2,23 @@
 using Mds.TddExample.Domain.Domains.Helicopters.Queries;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mds.TddExample.Api.Inventory
+namespace Mds.TddExample.Api.Helicopters
 {
     [Route("helicopters")]
     public class HelicoptersController
     {
-        private readonly SearchHelicoptersQuery _searchHelicoptersQuery;
-        private readonly GetHelicopterQuery _getHelicopterQuery;
-        private readonly UpdateHelicopterCommand _updateHelicopterCommand;
-        private readonly CreateHelicopterCommand _createHelicopterCommand;
-        private readonly DeleteHelicopterCommand _deleteHelicopterCommand;
+        private readonly ISearchHelicoptersQuery _searchHelicoptersQuery;
+        private readonly IGetHelicopterQuery _getHelicopterQuery;
+        private readonly IUpdateHelicopterCommand _updateHelicopterCommand;
+        private readonly ICreateHelicopterCommand _createHelicopterCommand;
+        private readonly IDeleteHelicopterCommand _deleteHelicopterCommand;
 
         public HelicoptersController(
-            SearchHelicoptersQuery searchHelicoptersQuery,
-            GetHelicopterQuery getHelicopterQuery,
-            UpdateHelicopterCommand updateHelicopterCommand,
-            CreateHelicopterCommand createHelicopterCommand,
-            DeleteHelicopterCommand deleteHelicopterCommand)
+            ISearchHelicoptersQuery searchHelicoptersQuery,
+            IGetHelicopterQuery getHelicopterQuery,
+            IUpdateHelicopterCommand updateHelicopterCommand,
+            ICreateHelicopterCommand createHelicopterCommand,
+            IDeleteHelicopterCommand deleteHelicopterCommand)
         {
             _searchHelicoptersQuery = searchHelicoptersQuery;
             _getHelicopterQuery = getHelicopterQuery;

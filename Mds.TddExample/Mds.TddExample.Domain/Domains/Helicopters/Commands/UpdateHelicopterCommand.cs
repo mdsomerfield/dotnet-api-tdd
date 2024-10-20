@@ -5,7 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mds.TddExample.Domain.Domains.Helicopters.Commands;
 
-public class UpdateHelicopterCommand
+public interface IUpdateHelicopterCommand
+{
+    Task<HelicopterModel> Execute(int id, HelicopterModel model);
+}
+
+public class UpdateHelicopterCommand : IUpdateHelicopterCommand
 {
     private readonly ApplicationDbContext _dbContext;
 

@@ -3,8 +3,12 @@ using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Mds.TddExample.Domain.Exceptions;
 
 namespace Mds.TddExample.Domain.Domains.Helicopters.Queries;
+public interface IGetHelicopterQuery
+{
+    Task<HelicopterModel> Execute(int id);
+}
 
-public class GetHelicopterQuery
+public class GetHelicopterQuery : IGetHelicopterQuery
 {
     private readonly ApplicationDbContext _dbContext;
 

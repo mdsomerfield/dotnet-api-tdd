@@ -3,7 +3,12 @@ using Mds.TddExample.Domain.Domains.Helicopters.Models;
 
 namespace Mds.TddExample.Domain.Domains.Helicopters.Commands;
 
-public class CreateHelicopterCommand
+public interface ICreateHelicopterCommand
+{
+    Task<HelicopterModel> Execute(HelicopterModel model);
+}
+
+public class CreateHelicopterCommand : ICreateHelicopterCommand
 {
     private readonly ApplicationDbContext _dbContext;
 

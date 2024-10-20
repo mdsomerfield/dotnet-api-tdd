@@ -1,4 +1,4 @@
-﻿using Mds.TddExample.Api.Inventory;
+﻿using Mds.TddExample.Api.Helicopters;
 
 namespace Mds.TddExample.ApiTests.Helpers.Helicopters
 {

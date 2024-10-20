@@ -1,7 +1,6 @@
-﻿using Mds.TddExample.Db.Entities;
-using Mds.TddExample.Domain.Domains.Helicopters.Models;
+﻿using Mds.TddExample.Domain.Domains.Helicopters.Models;
 
-namespace Mds.TddExample.Api.Inventory
+namespace Mds.TddExample.Api.Helicopters
 {
     public class HelicopterDto
     {

@@ -4,7 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mds.TddExample.Domain.Domains.Helicopters.Queries
 {
-    public class SearchHelicoptersQuery
+    public interface ISearchHelicoptersQuery
+    {
+        Task<IList<HelicopterModel>> Execute();
+    }
+
+    public class SearchHelicoptersQuery : ISearchHelicoptersQuery
     {
         private readonly ApplicationDbContext _dbContext;
 
