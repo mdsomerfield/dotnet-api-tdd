@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using FluentAssertions;
 using Mds.TddExample.Api.Helicopters;
 using Mds.TddExample.ApiTests.TestFramework;
 
@@ -31,6 +32,11 @@ namespace Mds.TddExample.ApiTests.Helpers.Helicopters
         {
             return new HelicopterBuilder()
                 .WithName(Instance.Name);
+        }
+
+        public void ShouldMatch(HelicopterDto helicopter)
+        {
+            helicopter.Name.Should().Be(Instance.Name);
         }
     }
 }
