@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-
+using Mds.TddExample.Api.Common.Exceptions;
 using Mds.TddExample.Db;
 using Mds.TddExample.Db.Entities;
 using Mds.TddExample.Domain.Domains.Helicopters.Commands;
@@ -49,7 +49,7 @@ public class Startup
         services.AddMvc().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         services.AddAntiforgery();
-
+        services.RegisterApiExceptions();
         services.AddAuthorization(options => { });
 
         var connStr = configuration.GetConnectionString("ApplicationConnectionString");
@@ -73,6 +73,9 @@ public class Startup
 
     public static void ConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        // Empty Lambda required due to https://github.com/dotnet/aspnetcore/issues/51888
+        app.UseExceptionHandler(opt => { });
+
         app.UseRouting();
 
         app.UseAuthentication();

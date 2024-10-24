@@ -58,7 +58,7 @@ public class JsonClient
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new HttpRequestException($"Expected {HttpStatusCode.OK} but received {response.StatusCode}")
+            throw new HttpRequestException($"Expected {HttpStatusCode.OK} but received {response.StatusCode}", null, response.StatusCode)
             {
                 Data = { { "ResponseBody", contentString } },
             };

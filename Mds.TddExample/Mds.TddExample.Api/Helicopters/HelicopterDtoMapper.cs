@@ -6,7 +6,6 @@ namespace Mds.TddExample.Api.Helicopters
     {
 
         HelicopterDto MapFrom(HelicopterModel model);
-
         HelicopterModel MapTo(HelicopterDto dto);
         HelicopterModel MapFrom(CreateHelicopterDto model);
 
