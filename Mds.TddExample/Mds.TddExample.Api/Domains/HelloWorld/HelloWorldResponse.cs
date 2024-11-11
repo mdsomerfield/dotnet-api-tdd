@@ -1,4 +1,4 @@
-﻿namespace Mds.TddExample.Api.HelloWorld
+﻿namespace Mds.TddExample.Api.Domains.HelloWorld
 {
     public class HelloWorldResponse
     {

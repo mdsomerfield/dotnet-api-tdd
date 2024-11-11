@@ -3,7 +3,7 @@ using Mds.TddExample.Domain.Domains.Helicopters.Models;
 using Mds.TddExample.Domain.Domains.Helicopters.Queries;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mds.TddExample.Api.Helicopters
+namespace Mds.TddExample.Api.Domains.Helicopters
 {
     [Route("helicopters")]
     public class HelicoptersController
@@ -39,7 +39,7 @@ namespace Mds.TddExample.Api.Helicopters
         }
 
         [HttpPost]
-        public async Task<HelicopterDto> Create([FromBody]HelicopterDto dto)
+        public async Task<HelicopterDto> Create([FromBody] HelicopterDto dto)
         {
             var helicopter = _helicopterDtoMapper.MapTo(dto);
             var createdModel = await _createHelicopterCommand.Execute(helicopter);
@@ -56,7 +56,7 @@ namespace Mds.TddExample.Api.Helicopters
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<HelicopterDto> Update(int id, [FromBody]HelicopterDto dto)
+        public async Task<HelicopterDto> Update(int id, [FromBody] HelicopterDto dto)
         {
             var helicopter = _helicopterDtoMapper.MapTo(dto);
             var updatedModel = await _updateHelicopterCommand.Execute(id, helicopter);

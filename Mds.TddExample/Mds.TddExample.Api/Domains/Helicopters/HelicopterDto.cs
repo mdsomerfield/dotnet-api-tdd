@@ -1,13 +1,13 @@
 ﻿using Mds.TddExample.Domain.Domains.Helicopters.Models;
 
-namespace Mds.TddExample.Api.Helicopters
+namespace Mds.TddExample.Api.Domains.Helicopters
 {
-    public class CreateHelicopterDto
+    public record CreateHelicopterDto
     {
         public string Name { get; set; }
     }
 
-    public class HelicopterDto : CreateHelicopterDto
+    public record HelicopterDto : CreateHelicopterDto
     {
         public int Id { get; set; }
     }

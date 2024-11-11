@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using Mds.TddExample.Api.Helicopters;
+using Mds.TddExample.Api.Domains.Helicopters;
 using Mds.TddExample.ApiTests.TestFramework;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 

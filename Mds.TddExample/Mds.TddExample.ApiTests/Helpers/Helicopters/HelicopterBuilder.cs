@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using FluentAssertions;
-using Mds.TddExample.Api.Helicopters;
+using Mds.TddExample.Api.Domains.Helicopters;
 using Mds.TddExample.ApiTests.TestFramework;
 
 namespace Mds.TddExample.ApiTests.Helpers.Helicopters

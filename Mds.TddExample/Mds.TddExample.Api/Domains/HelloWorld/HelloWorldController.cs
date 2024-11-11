@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Mds.TddExample.Api.HelloWorld
+namespace Mds.TddExample.Api.Domains.HelloWorld
 {
     public class HelloWorldController : Controller
     {

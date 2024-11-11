@@ -1,4 +1,4 @@
-﻿using Mds.TddExample.Api.HelloWorld;
+﻿using Mds.TddExample.Api.Domains.HelloWorld;
 using Mds.TddExample.ApiTests.TestFramework;
 using Xunit;
 

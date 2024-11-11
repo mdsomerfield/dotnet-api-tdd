@@ -1,6 +1,6 @@
 ﻿using Mds.TddExample.Domain.Domains.Helicopters.Models;
 
-namespace Mds.TddExample.Api.Helicopters
+namespace Mds.TddExample.Api.Domains.Helicopters
 {
     public interface IHelicopterDtoMapper
     {

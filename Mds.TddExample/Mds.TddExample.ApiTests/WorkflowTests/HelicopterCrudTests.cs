@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using FluentAssertions;
+using Mds.TddExample.Api.Domains.Schedules;
 using Mds.TddExample.ApiTests.Helpers.Helicopters;
+using Mds.TddExample.ApiTests.Helpers.Schedules;
 using Mds.TddExample.ApiTests.TestFramework;
 using Xunit;
 
@@ -61,6 +63,29 @@ namespace Mds.TddExample.ApiTests.WorkflowTests
             // 9. Get all helicopters (expect 0)
             var helicopters3 = await helicoptersApi.GetAllHelicopters();
             helicopters3.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public async Task Can_CRUD_HelicopterSchedule()
+        {
+            // 1. Create a new helicopter
+            var helicoptersApi = new HelicoptersApi(Fixture);
+            var helicopterBuilder = new HelicopterBuilder();
+            var newHelicopter = await helicoptersApi.CreateHelicopter(helicopterBuilder.Build());
+
+            // 2. Set helicopter schedule
+            var scheduler = new SchedulesApi(Fixture);
+            var scheduleBuilder = new ScheduleBuilder()
+                .WithDailyHours(DayOfWeek.Monday, new TimeSpan(9, 0, 0), new TimeSpan(5, 0, 0))
+                .WithDailyHours(DayOfWeek.Tuesday, new TimeSpan(9, 30, 0), new TimeSpan(5, 0, 0))
+                .WithDailyHours(DayOfWeek.Wednesday, new TimeSpan(9, 30, 0), new TimeSpan(6, 15, 0))
+                .WithHelicopter(newHelicopter.Id); 
+            var schedule = await scheduler.CreateSchedule(scheduleBuilder.Build());
+            scheduleBuilder.ShouldMatch(schedule);
+
+            // 3. Get the helicopter schedule
+            var schedule2 = await scheduler.GetSchedule(schedule.Id);
+            scheduleBuilder.ShouldMatch(schedule2);
         }
     }
 }
