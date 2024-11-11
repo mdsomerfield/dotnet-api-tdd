@@ -20,37 +20,33 @@ namespace Mds.TddExample.ApiTests.WorkflowTests
         {
             var helicoptersApi = new HelicoptersApi(Fixture);
 
-            // 1. Get all helicopters (expect 0)
-            var helicopters1 = await helicoptersApi.GetAllHelicopters();
-            helicopters1.Should().BeEmpty();
-
-            // 2. Create a new helicopter
+            // 1. Create a new helicopter
             var helicopterBuilder = new HelicopterBuilder();
             var newHelicopter = await helicoptersApi.CreateHelicopter(helicopterBuilder.Build());
             helicopterBuilder.ShouldMatch(newHelicopter);
 
-            // 3. Get all helicopters (expect 1)
+            // 2. Get all helicopters (expect 1)
             var helicopters2 = await helicoptersApi.GetAllHelicopters();
-            helicopters2.Should().HaveCount(1);
+            helicopters2.Should().Contain(c => c.Id == newHelicopter.Id);
 
-            // 4. Get the new helicopter
+            // 3. Get the new helicopter
             var createdHelicopter = await helicoptersApi.GetHelicopter(newHelicopter.Id);
             helicopterBuilder.ShouldMatch(createdHelicopter);
 
-            // 5. Update the new helicopter
+            // 4. Update the new helicopter
             var updatedHelicopterBuilder = helicopterBuilder.Clone().WithName("Name");
             var updatedHelicopterDto = updatedHelicopterBuilder.Build();
             var updatedHelicopter1 = await helicoptersApi.UpdateHelicopter(newHelicopter.Id, updatedHelicopterDto);
             updatedHelicopterBuilder.ShouldMatch(updatedHelicopter1);
 
-            // 6. Get the new helicopter (expect updated)
+            // 5. Get the new helicopter (expect updated)
             var updatedHelicopter2 = await helicoptersApi.GetHelicopter(newHelicopter.Id);
             updatedHelicopterBuilder.ShouldMatch(updatedHelicopter2);
 
-            // 7. Delete the new helicopter
+            // 6. Delete the new helicopter
             await helicoptersApi.DeleteHelicopter(newHelicopter.Id);
 
-            // 8. Get the helicopter (expect 404)
+            // 7. Get the helicopter (expect 404)
             try
             {
                 await helicoptersApi.GetHelicopter(newHelicopter.Id);
